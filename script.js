@@ -24,10 +24,12 @@ getCurrentCoord = async() =>{
 }
 onReload = async() =>{
     loader.classList.remove("hidden");
+    hideable_container.classList.toggle("hidden");
     const response = await getCurrentCoord();
     const {ip,isp,location} = response;
     const {city,region,country,timezone,lat,lng} = location;
     loader.classList.add("hidden");
+    hideable_container.classList.toggle("hidden");
     mymap.setView([lat,lng],12);
     var marker = L.marker([lat,lng], {icon:customIcon}).addTo(mymap);
     const popup = lat + "\n" + lng;
@@ -49,14 +51,14 @@ handleSubmit = async() =>{
     }
     else{
         loader.classList.toggle("hidden");
-        hideable_container.classList.add("hidden");
+        hideable_container.classList.toggle("hidden");
         
         const Url =`https://geo.ipify.org/api/v1?apiKey=at_9ar6j3rlGIh0BN7KO7lBBdOilNlmC&ipAddress=${inp}`;
         const Response = await fetch(Url).then(resp => resp.json());
         const {ip,isp,location} = Response;
         const {city,region,country,timezone,lat,lng} = location;
         loader.classList.toggle("hidden");
-        hideable_container.classList.remove("hidden");
+        hideable_container.classList.toggle("hidden");
         mymap.setView([lat,lng],12);
         var marker = L.marker([lat,lng], {icon:customIcon}).addTo(mymap);
         const popup = lat + "\n" + lng;
