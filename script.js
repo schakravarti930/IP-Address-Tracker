@@ -1,4 +1,7 @@
 
+const loader = document.querySelector(".loader");
+const hideable_container = document.querySelector(".container-hideable");
+
 var customIcon = L.icon({
     iconUrl: 'images/icon-location.svg',
     iconSize:[30,40],
@@ -21,10 +24,11 @@ getCurrentCoord = async() =>{
     return response;
 }
 onReload = async() =>{
+    loader.classList.remove("hidden");
     const response = await getCurrentCoord();
     const {ip,isp,location} = response;
     const {city,region,country,timezone,lat,lng} = location;
-
+    loader.classList.add("hidden");
     mymap.setView([lat,lng],12);
     var marker = L.marker([lat,lng], {icon:customIcon}).addTo(mymap);
     const popup = lat + "\n" + lng;
@@ -33,18 +37,21 @@ onReload = async() =>{
     document.getElementById("Location").innerHTML = `${city}, ${region}, ${country}`;
     document.getElementById("Timezone").innerHTML = `UTC ${timezone}`;
     document.getElementById("Isp").innerHTML = isp;
-    console.log(popup);
+    console.log(response);
 }
 onReload();
 
 
 handleSubmit = async() =>{
+    loader.classList.toggle("hidden");
+    hideable_container.classList.add("hidden");
     const inp = document.querySelector(".input input").value;
     const Url =`https://geo.ipify.org/api/v1?apiKey=at_9ar6j3rlGIh0BN7KO7lBBdOilNlmC&ipAddress=${inp}`;
     const Response = await fetch(Url).then(resp => resp.json());
     const {ip,isp,location} = Response;
     const {city,region,country,timezone,lat,lng} = location;
-
+    loader.classList.toggle("hidden");
+    hideable_container.classList.remove("hidden");
     mymap.setView([lat,lng],12);
     var marker = L.marker([lat,lng], {icon:customIcon}).addTo(mymap);
     const popup = lat + "\n" + lng;
@@ -53,7 +60,7 @@ handleSubmit = async() =>{
     document.getElementById("Location").innerHTML = `${city}, ${region}, ${country}`;
     document.getElementById("Timezone").innerHTML = `UTC ${timezone}`;
     document.getElementById("Isp").innerHTML = isp;
-    console.log(ip);
+    console.log(Response);
 }
 
 
