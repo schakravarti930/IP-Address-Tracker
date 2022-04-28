@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 body{
-    height: 100vh;
+    min-height: 100vh;
     display: grid;
     grid-column: auto;
     grid-template-rows: 33vh 67vh;
