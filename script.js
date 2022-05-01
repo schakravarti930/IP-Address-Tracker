@@ -39,7 +39,7 @@ const setMapLocation = (response) => {
     loader.classList.add("hidden");
     hideable_container.classList.toggle("hidden");
     mymap.setView([lat,lng],12);
-    var marker = L.marker([lat,lng], {icon:customIcon}).addTo(mymap);
+    const marker = L.marker([lat,lng], {icon:customIcon}).addTo(mymap);
     const popup = lat + "\n" + lng;
     marker.bindPopup(popup).openPopup();
     document.getElementById("Ip").innerHTML = ip;
@@ -67,6 +67,6 @@ const button = document.querySelector("#search");
 button.addEventListener('click',handleSubmit);
 
 const ValidateIP = (IP) => {
-    var pattern = "^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.(?!$)|$)){4}$";
-    return IP.match(pattern);
+    const ipv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.){4}$/;
+    return ipv4.test(IP+'.');
 };
